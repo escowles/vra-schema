@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
-<!-- VRA (Visual Resources Association) Core 4 XML Schema, version 0.42
-     This schema implements the final VRA Core 4.0 guidelines, 2007-04-09.
+<!-- VRA (Visual Resources Association) Core 5 XML Schema, version 0.1
+     This schema implements the final VRA Core 5.0 guidelines, XXXX-XX-XX.
 
      This is the restricted version of the schema.  It extends the unrestricted
      schema by limiting the values many attributes to enumerated lists, and
      restricting dates to ISO 8601 format.
 
-     Developed by Esme Cowles (UC San Diego) with input from:
+     Developed by Esmé Cowles (Princeton University Library) with input from:
 
        Howard Batchelor (UCLA)
        Rick Beaubien (UC Berkeley)
@@ -26,29 +26,48 @@
        Robin Wendler (Harvard)
        Brad Westbrook (UC San Diego)
        Ann Whiteside (Univ. of Virginia)
+       Susan Jane Williams (Independent Cataloging and Consulting Services)
 -->
-<xsd:schema targetNamespace="http://www.vraweb.org/vracore4.htm"
-    version="4.0.42" xmlns="http://www.vraweb.org/vracore4.htm"
+<xsd:schema targetNamespace="http://www.vraweb.org/vracore5.htm"
+    version="5.0.1" xmlns="http://www.vraweb.org/vracore5.htm"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema" xml:lang="en"
     elementFormDefault="qualified" attributeFormDefault="unqualified">
   <xsd:annotation>
     <xsd:documentation>
-      This schema is an implementation of the VRA Core Categories, Version 4.0.
+      This schema is an implementation of the VRA Core Categories, Version 5.0.
       It defines a wrapper element (vra), which can hold any number of
       record-level elements (collection, work, image).  These elements can be
       nested to indicate collection-work-image hierarchies.
 
-      This schema extends the VRA 4.0 unrestricted schema to provide
+      This schema extends the VRA 5.0 unrestricted schema to provide
       restrictions to improve interoperability.
     </xsd:documentation>
   </xsd:annotation>
 
   <!-- include the unrestricted schema -->
   <xsd:redefine
+  <!-- temporarily use local xsd
     schemaLocation="http://www.loc.gov/standards/vracore/vra.xsd">
+  -->
+    schemaLocation="vra.xsd">
 
     <!--== Controlled Value Lists ==========================================-->
 
+    <xsd:simpleType name="accessibilityTypeType">
+      <xsd:restriction base="accessibilityTypeType">
+        <xsl:enumeration value="flashingHazard"/>
+        <xsl:enumeration value="motionHazard"/>
+        <xsl:enumeration value="soundHazard"/>
+        <xsl:enumeration value="audioDescription"/>
+        <xsl:enumeration value="openCaptions"/>
+        <xsl:enumeration value="closedCaptions"/>
+        <xsl:enumeration value="taggedPDF"/>
+        <xsl:enumeration value="signLanguageVideo"/>
+        <xsl:enumeration value="transcription"/>
+        <xsl:enumeration value="translation"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+  
     <xsd:simpleType name="agentDateTypeType">
       <xsd:restriction base="agentDateTypeType">
         <xsd:enumeration value="activity"/>
@@ -82,6 +101,14 @@
         <xsd:enumeration value="publication"/>
         <xsd:enumeration value="restoration"/>
         <xsd:enumeration value="view"/>
+        <xsd:enumeration value="other"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="descriptionTypeType">
+      <xsd:restriction base="descriptionTypeType">
+        <xsd:enumeration value="alternativeText"/>
+        <xsd:enumeration value="pedagogical"/>
         <xsd:enumeration value="other"/>
       </xsd:restriction>
     </xsd:simpleType>
@@ -302,6 +329,7 @@
   
     <xsd:simpleType name="titleTypeType">
       <xsd:restriction base="titleTypeType">
+        <xsd:enumeration value="alternativeText"/>
         <xsd:enumeration value="brandName"/>
         <xsd:enumeration value="cited"/>
         <xsd:enumeration value="creator"/>

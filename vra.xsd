@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
-<!-- VRA (Visual Resources Association) Core 4 XML Schema, version 0.42
-     This schema implements the final VRA Core 4.0 guidelines, 2007-04-09.
+<!-- VRA (Visual Resources Association) Core 5 XML Schema, version 0.1
+     This schema implements the final VRA Core 5.0 guidelines, XXXX-XX-XX.
 
      This is the unrestricted version of the schema.  All attributes are
      uncontrolled.
 
-     Developed by Esme Cowles (UC San Diego) with input from:
+     Developed by Esmé Cowles (Princeton University Library) with input from:
 
        Howard Batchelor (UCLA)
        Rick Beaubien (UC Berkeley)
@@ -25,14 +25,16 @@
        Robin Wendler (Harvard)
        Brad Westbrook (UC San Diego)
        Ann Whiteside (Univ. of Virginia)
+       Susan Jane Williams (Independent Cataloging and Consulting Services)
 -->
-<xsd:schema targetNamespace="http://www.vraweb.org/vracore4.htm"
-    version="4.0.42" xmlns="http://www.vraweb.org/vracore4.htm"
+<xsd:schema targetNamespace="http://www.vraweb.org/vracore5.htm"
+    version="5.0.1" xmlns="http://www.vraweb.org/vracore5.htm"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema" xml:lang="en"
+    xmlns:georss="http://www.georss.org/georss"
     elementFormDefault="qualified" attributeFormDefault="unqualified">
   <xsd:annotation>
     <xsd:documentation>
-      This schema is an implementation of the VRA Core Categories, Version 4.0.
+      This schema is an implementation of the VRA Core Categories, Version 5.0.
       It defines a wrapper element (vra), which can hold any number of
       record-level elements (collection, work, image).  These elements can be
       nested to indicate collection-work-image hierarchies.
@@ -44,6 +46,15 @@
     <xsd:annotation>
       <xsd:documentation>
         Get access to the xml: attribute groups for xml:lang as declared below.
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:import>
+
+  <xsd:import namespace="http://www.georss.org/georss"
+    schemaLocation="https://schemas.opengis.net/georss/1.0/schema-1.1/georss.xsd">
+    <xsd:annotation>
+      <xsd:documentation>
+        Get access to the georss: elements for GIS info.
       </xsd:documentation>
     </xsd:annotation>
   </xsd:import>
@@ -60,6 +71,7 @@
 
   <!--== VRA Element Sets ==================================================-->
 
+  <xsd:element name="accessibilitySet"   type="accessibilitySetType"/>
   <xsd:element name="agentSet"           type="agentSetType"/>
   <xsd:element name="culturalContextSet" type="culturalContextSetType"/>
   <xsd:element name="dateSet"            type="dateSetType"/>
@@ -79,10 +91,11 @@
   <xsd:element name="titleSet"           type="titleSetType"/>
   <xsd:element name="worktypeSet"        type="worktypeSetType"/>
 
+  <xsd:element name="accessibility"      type="accessibilityType"/>
   <xsd:element name="agent"              type="agentType"/>
   <xsd:element name="culturalContext"    type="basicString"/>
   <xsd:element name="date"               type="dateType"/>
-  <xsd:element name="description"        type="basicString"/>
+  <xsd:element name="description"        type="descriptionType"/>
   <xsd:element name="inscription"        type="inscriptionType"/>
   <xsd:element name="location"           type="locationType"/>
   <xsd:element name="material"           type="materialType"/>
@@ -163,6 +176,7 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
+      <xsd:element ref="accessibilitySet"   minOccurs="0"/>
       <xsd:element ref="agentSet"           minOccurs="0"/>
       <xsd:element ref="culturalContextSet" minOccurs="0"/>
       <xsd:element ref="dateSet"            minOccurs="0"/>
@@ -200,6 +214,15 @@
     </xsd:sequence>
   </xsd:complexType>
 
+  <xsd:complexType name="accessibilitySetType">
+    <xsd:complexContent>
+      <xsd:extension base="setType">
+        <xsd:sequence minOccurs="1" maxOccurs="unbounded">
+          <xsd:element ref="accessibility"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
   <xsd:complexType name="agentSetType">
     <xsd:complexContent>
       <xsd:extension base="setType">
@@ -427,6 +450,25 @@
 
   <!--== VRA Core Elements =================================================-->
 
+  <!-- Element: Accessibility -->
+  <xsd:complexType name="accessibilityType">
+    <xsd:annotation>
+      <xsd:documentation>
+        Accessibility element.  Use type attribute to specify type of accessibility hazard or 
+        adaptation.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="basicString">
+        <xsd:attribute name="type" type="accessibilityTypeType"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="accessibilityTypeType">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+
+
   <!-- Element: Agent -->
   <xsd:complexType name="agentType">
     <xsd:annotation>
@@ -496,7 +538,22 @@
   </xsd:simpleType>
 
 
-  <!-- Element: Description (See basicString) -->
+  <!-- Element: Description -->
+  <xsd:complexType name="descriptionType">
+    <xsd:annotation>
+      <xsd:documentation>
+        Description element.  Use type attribute to specify purpose of the description.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="basicString">
+        <xsd:attribute name="type" type="descriptionTypeType"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="descriptionTypeType">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
 
 
   <!-- Element: Inscription -->
@@ -545,6 +602,10 @@
     <xsd:sequence minOccurs="1" maxOccurs="unbounded">
       <xsd:element name="refid" type="locationRefidType" minOccurs="0"/>
       <xsd:element name="name"  type="locationNameType" minOccurs="0"/>
+      <xsd:element ref="georss:point" minOccurs="0"/>
+      <xsd:element ref="georss:line" minOccurs="0"/>
+      <xsd:element ref="georss:box" minOccurs="0"/>
+      <xsd:element ref="georss:circle" minOccurs="0"/>
     </xsd:sequence>
     <xsd:attributeGroup ref="vraAttributes"/>
     <xsd:attribute name="type" type="locationTypeType"/>
