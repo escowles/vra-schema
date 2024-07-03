@@ -30,6 +30,7 @@
 <xsd:schema targetNamespace="http://www.vraweb.org/vracore5.htm"
     version="5.0.1" xmlns="http://www.vraweb.org/vracore5.htm"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema" xml:lang="en"
+    xmlns:georss="http://www.georss.org/georss"
     elementFormDefault="qualified" attributeFormDefault="unqualified">
   <xsd:annotation>
     <xsd:documentation>
@@ -45,6 +46,15 @@
     <xsd:annotation>
       <xsd:documentation>
         Get access to the xml: attribute groups for xml:lang as declared below.
+      </xsd:documentation>
+    </xsd:annotation>
+  </xsd:import>
+
+  <xsd:import namespace="http://www.georss.org/georss"
+    schemaLocation="https://schemas.opengis.net/georss/1.0/schema-1.1/georss.xsd">
+    <xsd:annotation>
+      <xsd:documentation>
+        Get access to the georss: elements for GIS info.
       </xsd:documentation>
     </xsd:annotation>
   </xsd:import>
@@ -561,6 +571,10 @@
     <xsd:sequence minOccurs="1" maxOccurs="unbounded">
       <xsd:element name="refid" type="locationRefidType" minOccurs="0"/>
       <xsd:element name="name"  type="locationNameType" minOccurs="0"/>
+      <xsd:element ref="georss:point" minOccurs="0"/>
+      <xsd:element ref="georss:line" minOccurs="0"/>
+      <xsd:element ref="georss:box" minOccurs="0"/>
+      <xsd:element ref="georss:circle" minOccurs="0"/>
     </xsd:sequence>
     <xsd:attributeGroup ref="vraAttributes"/>
     <xsd:attribute name="type" type="locationTypeType"/>
