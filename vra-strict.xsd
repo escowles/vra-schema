@@ -87,6 +87,14 @@
       </xsd:restriction>
     </xsd:simpleType>
 
+    <xsd:simpleType name="descriptionTypeType">
+      <xsd:restriction base="descriptionTypeType">
+        <xsd:enumeration value="alternativeText"/>
+        <xsd:enumeration value="pedagogical"/>
+        <xsd:enumeration value="other"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+
     <xsd:simpleType name="inscriptionTextTypeType">
       <xsd:restriction base="inscriptionTextTypeType">
         <xsd:enumeration value="signature"/>
@@ -303,6 +311,7 @@
   
     <xsd:simpleType name="titleTypeType">
       <xsd:restriction base="titleTypeType">
+        <xsd:enumeration value="alternativeText"/>
         <xsd:enumeration value="brandName"/>
         <xsd:enumeration value="cited"/>
         <xsd:enumeration value="creator"/>
