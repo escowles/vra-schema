@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
-<!-- VRA (Visual Resources Association) Core 4 XML Schema, version 0.42
-     This schema implements the final VRA Core 4.0 guidelines, 2007-04-09.
+<!-- VRA (Visual Resources Association) Core 5 XML Schema, version 0.1
+     This schema implements the final VRA Core 5.0 guidelines, XXXX-XX-XX.
 
      This is the restricted version of the schema.  It extends the unrestricted
      schema by limiting the values many attributes to enumerated lists, and
      restricting dates to ISO 8601 format.
 
-     Developed by Esme Cowles (UC San Diego) with input from:
+     Developed by Esmé Cowles (Princeton University Library) with input from:
 
        Howard Batchelor (UCLA)
        Rick Beaubien (UC Berkeley)
@@ -26,19 +26,20 @@
        Robin Wendler (Harvard)
        Brad Westbrook (UC San Diego)
        Ann Whiteside (Univ. of Virginia)
+       Susan Jane Williams (Independent Cataloging and Consulting Services)
 -->
-<xsd:schema targetNamespace="http://www.vraweb.org/vracore4.htm"
-    version="4.0.42" xmlns="http://www.vraweb.org/vracore4.htm"
+<xsd:schema targetNamespace="http://www.vraweb.org/vracore5.htm"
+    version="5.0.1" xmlns="http://www.vraweb.org/vracore5.htm"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema" xml:lang="en"
     elementFormDefault="qualified" attributeFormDefault="unqualified">
   <xsd:annotation>
     <xsd:documentation>
-      This schema is an implementation of the VRA Core Categories, Version 4.0.
+      This schema is an implementation of the VRA Core Categories, Version 5.0.
       It defines a wrapper element (vra), which can hold any number of
       record-level elements (collection, work, image).  These elements can be
       nested to indicate collection-work-image hierarchies.
 
-      This schema extends the VRA 4.0 unrestricted schema to provide
+      This schema extends the VRA 5.0 unrestricted schema to provide
       restrictions to improve interoperability.
     </xsd:documentation>
   </xsd:annotation>
