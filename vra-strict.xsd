@@ -50,6 +50,21 @@
 
     <!--== Controlled Value Lists ==========================================-->
 
+    <xsd:simpleType name="accessibilityTypeType">
+      <xsd:restriction base="accessibilityTypeType">
+        <xsl:enumeration value="flashingHazard"/>
+        <xsl:enumeration value="motionHazard"/>
+        <xsl:enumeration value="soundHazard"/>
+        <xsl:enumeration value="audioDescription"/>
+        <xsl:enumeration value="openCaptions"/>
+        <xsl:enumeration value="closedCaptions"/>
+        <xsl:enumeration value="taggedPDF"/>
+        <xsl:enumeration value="signLanguageVideo"/>
+        <xsl:enumeration value="transcription"/>
+        <xsl:enumeration value="translation"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+  
     <xsd:simpleType name="agentDateTypeType">
       <xsd:restriction base="agentDateTypeType">
         <xsd:enumeration value="activity"/>

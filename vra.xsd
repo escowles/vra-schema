@@ -71,6 +71,7 @@
 
   <!--== VRA Element Sets ==================================================-->
 
+  <xsd:element name="accessibilitySet"   type="accessibilitySetType"/>
   <xsd:element name="agentSet"           type="agentSetType"/>
   <xsd:element name="culturalContextSet" type="culturalContextSetType"/>
   <xsd:element name="dateSet"            type="dateSetType"/>
@@ -90,6 +91,7 @@
   <xsd:element name="titleSet"           type="titleSetType"/>
   <xsd:element name="worktypeSet"        type="worktypeSetType"/>
 
+  <xsd:element name="accessibility"      type="accessibilityType"/>
   <xsd:element name="agent"              type="agentType"/>
   <xsd:element name="culturalContext"    type="basicString"/>
   <xsd:element name="date"               type="dateType"/>
@@ -174,6 +176,7 @@
       </xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
+      <xsd:element ref="accessibilitySet"   minOccurs="0"/>
       <xsd:element ref="agentSet"           minOccurs="0"/>
       <xsd:element ref="culturalContextSet" minOccurs="0"/>
       <xsd:element ref="dateSet"            minOccurs="0"/>
@@ -211,6 +214,15 @@
     </xsd:sequence>
   </xsd:complexType>
 
+  <xsd:complexType name="accessibilitySetType">
+    <xsd:complexContent>
+      <xsd:extension base="setType">
+        <xsd:sequence minOccurs="1" maxOccurs="unbounded">
+          <xsd:element ref="accessibility"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
   <xsd:complexType name="agentSetType">
     <xsd:complexContent>
       <xsd:extension base="setType">
@@ -437,6 +449,25 @@
 
 
   <!--== VRA Core Elements =================================================-->
+
+  <!-- Element: Accessibility -->
+  <xsd:complexType name="accessibilityType">
+    <xsd:annotation>
+      <xsd:documentation>
+        Accessibility element.  Use type attribute to specify type of accessibility hazard or 
+        adaptation.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="basicString">
+        <xsd:attribute name="type" type="accessibilityTypeType"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+  <xsd:simpleType name="accessibilityTypeType">
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+
 
   <!-- Element: Agent -->
   <xsd:complexType name="agentType">
